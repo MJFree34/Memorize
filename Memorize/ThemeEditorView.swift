@@ -40,6 +40,9 @@ struct ThemeEditorView: View {
                                 .onTapGesture {
                                     withAnimation {
                                         emojis.remove(emoji)
+                                        if numberOfPairs > emojis.count {
+                                            numberOfPairs = emojis.count
+                                        }
                                     }
                                 }
                         }
