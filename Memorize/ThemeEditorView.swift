@@ -17,7 +17,7 @@ struct ThemeEditorView: View {
     @State private var numberOfPairs: Int
     @State private var color: Color
     @State private var emojisToAdd = ""
-
+    
     init(theme: Binding<Theme>) {
         _theme = theme
         _name = State(initialValue: theme.wrappedValue.name)
@@ -27,59 +27,63 @@ struct ThemeEditorView: View {
     }
     
     var body: some View {
-        Form {
-            Section("Theme Name") {
-                TextField("Theme Name", text: $theme.name)
-            }
-            
-            Section(header: emojisHeader) {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 20))], alignment: .center) {
-                    ForEach(emojis) { emoji in
-                        Text(emoji)
-                            .onTapGesture {
-                                withAnimation {
-                                    if let index = emojis.firstIndex(of: emoji) {
-                                        emojis.remove(at: index)
+        NavigationView {
+            Form {
+                Section("Theme Name") {
+                    TextField("Theme Name", text: $name)
+                }
+                
+                Section(header: emojisHeader) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 20))], alignment: .center) {
+                        ForEach(emojis) { emoji in
+                            Text(emoji)
+                                .onTapGesture {
+                                    withAnimation {
+                                        emojis.remove(emoji)
                                     }
                                 }
-                            }
-                    }
-                }
-            }
-            
-            Section("Add Emojis") {
-                TextField("Emojis", text: $emojisToAdd)
-                    .onChange(of: emojisToAdd) { newEmoji in
-                        withAnimation {
-                            addEmoji(newEmoji)
                         }
                     }
-            }
-            
-            Section("Number of Pairs") {
-                Stepper("\(emojis.count == numberOfPairs ? "All" : "\(numberOfPairs)") Pairs", value: $numberOfPairs, in: 2...emojis.count)
-            }
-            
-            Section("Color") {
-                ColorPicker(selection: $color) {
-                    Text("Current Color")
-                        .foregroundColor(color)
+                }
+                
+                Section("Add Emojis") {
+                    TextField("Emojis", text: $emojisToAdd)
+                        .onChange(of: emojisToAdd) { newEmoji in
+                            withAnimation {
+                                if emojisToAdd.count > 1 {
+                                    emojisToAdd.removeFirst(emojisToAdd.count - 1)
+                                } else {
+                                    addEmoji(newEmoji)
+                                }
+                            }
+                        }
+                }
+                
+                Section("Number of Pairs") {
+                    Stepper("\(emojis.count == numberOfPairs ? "All" : "\(numberOfPairs)") Pairs", value: $numberOfPairs, in: emojis.count > 2 ? 2...emojis.count : 2...2)
+                }
+                
+                Section("Color") {
+                    ColorPicker(selection: $color) {
+                        Text("Current Color")
+                            .foregroundColor(color)
+                    }
                 }
             }
-        }
-        .navigationTitle(theme.name)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Cancel") {
-                    dismiss()
+            .navigationTitle(theme.name)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
                 }
-            }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Done") {
-                    save()
-                    dismiss()
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        save()
+                        dismiss()
+                    }
                 }
             }
         }
@@ -96,7 +100,7 @@ struct ThemeEditorView: View {
     }
     
     private func addEmoji(_ emoji: String) {
-        if emoji.allSatisfy({ $0.isEmoji }) {
+        if emoji.allSatisfy({ $0.isEmoji }) && !emojis.contains(emoji) {
             emojis.append(emoji)
         }
     }
@@ -111,8 +115,6 @@ struct ThemeEditorView: View {
 
 struct ThemeEditorView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            ThemeEditorView(theme: .constant(ThemeViewModel().themes[0]))
-        }
+        ThemeEditorView(theme: .constant(ThemeViewModel().themes[0]))
     }
 }
