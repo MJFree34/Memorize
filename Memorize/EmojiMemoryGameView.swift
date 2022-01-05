@@ -175,15 +175,22 @@ import SwiftUI
 struct EmojiMemoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame
     
+    var theme: Theme
+    
     @Namespace private var dealingNamespace
     
     @State private var dealt = Set<Int>()
 
+    init(theme: Theme) {
+        game = EmojiMemoryGame(theme: theme)
+        self.theme = theme
+    }
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
                 HStack(alignment: .center) {
-                    Text(game.themeName)
+                    Text(theme.name)
                         .font(.largeTitle)
                         .fontWeight(.bold)
 
@@ -204,6 +211,7 @@ struct EmojiMemoryGameView: View {
             deckBody
         }
         .padding()
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     var gameBody: some View {
@@ -223,7 +231,7 @@ struct EmojiMemoryGameView: View {
                     }
             }
         }
-        .foregroundStyle(game.fillColor)
+        .foregroundColor(theme.color)
     }
     
     var deckBody: some View {
@@ -235,7 +243,7 @@ struct EmojiMemoryGameView: View {
             }
         }
         .frame(width: CardConstants.undealtWidth, height: CardConstants.undealtHeight)
-        .foregroundStyle(game.fillColor)
+        .foregroundStyle(theme.color)
         .onTapGesture {
             for card in game.cards {
                 withAnimation(dealAnimation(for: card)) {
@@ -251,57 +259,18 @@ struct EmojiMemoryGameView: View {
                 game.shuffle()
             }
         }
+        .buttonStyle(.bordered)
     }
 
     var restart: some View {
         Button("Restart") {
             withAnimation {
                 dealt = []
-                game.newGame()
+                game.newGame(theme: theme)
             }
         }
+        .buttonStyle(.bordered)
     }
-    
-//    var body: some View {
-//        VStack {
-//            HStack(alignment: .center) {
-//                Text(viewModel.themeName)
-//                    .font(.largeTitle)
-//                    .fontWeight(.bold)
-//
-//                Spacer()
-//
-//                Text("Score: \(viewModel.score)")
-//            }
-//
-//            ScrollView {
-//                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-//                    ForEach(viewModel.cards) { card in
-//                        CardView(card: card)
-//                            .aspectRatio(2/3, contentMode: .fit)
-//                            .onTapGesture {
-//                                viewModel.choose(card)
-//                            }
-//                    }
-//                }
-//            }
-//            .foregroundStyle(viewModel.fillColor)
-//            .overlay(
-//                VStack {
-//                    Spacer()
-//
-//                    Button("New Game") {
-//                        viewModel.newGame()
-//                    }
-//                    .font(.title)
-//                    .padding()
-//                    .buttonStyle(.borderedProminent)
-//                }
-//            )
-//
-//        }
-//        .padding(.horizontal)
-//    }
     
     private func deal(_ card: EmojiMemoryGame.Card) {
         dealt.insert(card.id)
@@ -380,10 +349,10 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let game = EmojiMemoryGame(theme: Theme(variation: .vehicles))
+        let theme = ThemeViewModel().themes[0]
 
-        EmojiMemoryGameView(game: game)
-        EmojiMemoryGameView(game: game)
+        EmojiMemoryGameView(theme: theme)
+        EmojiMemoryGameView(theme: theme)
             .preferredColorScheme(.dark)
     }
 }

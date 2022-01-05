@@ -43,80 +43,25 @@ import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
     typealias Card = MemoryGame<String>.Card
-    
-    static func randomTheme() -> Theme {
-        Theme(variation: Theme.Variation.allCases.randomElement()!, numberOfPairs: 10)
-    }
 
     static func makeMemoryGame(with theme: Theme) -> MemoryGame<String> {
-        var numberOfPairs = theme.numberOfPairs
-        var emojis = theme.variation.emojis
-
-        if emojis.count < numberOfPairs {
-            numberOfPairs = emojis.count
-        } else {
-            while emojis.count > numberOfPairs {
-                let index = Int.random(in: 0..<emojis.count)
-                emojis.remove(at: index)
-            }
-        }
-
-        return MemoryGame<String>(numberOfPairsOfCards: numberOfPairs) { pairIndex in
-            emojis[pairIndex]
+        MemoryGame<String>(numberOfPairsOfCards: theme.numberOfPairs) { pairIndex in
+            theme.emojis[pairIndex]
         }
     }
 
     @Published private var model: MemoryGame<String>
-    
-    private var theme: Theme
 
     var cards: [MemoryGame<String>.Card] {
-        return model.cards
+        model.cards
     }
 
     var score: Int {
         model.score
     }
 
-    var themeName: String {
-        theme.variation.rawValue.capitalized
-    }
-
-    var fillColor: LinearGradient {
-        switch theme.variation.fill {
-        case .color(let colorType):
-            switch colorType {
-            case "gray":
-                return LinearGradient(colors: [.gray], startPoint: .topLeading, endPoint: .bottomTrailing)
-            case "purple":
-                return LinearGradient(colors: [.purple], startPoint: .topLeading, endPoint: .bottomTrailing)
-            case "orange":
-                return LinearGradient(colors: [.orange], startPoint: .topLeading, endPoint: .bottomTrailing)
-            default:
-                return LinearGradient(colors: [.black], startPoint: .topLeading, endPoint: .bottomTrailing)
-            }
-        case .gradient(let gradientType):
-            switch gradientType {
-            case "mint":
-                return LinearGradient(colors: [.mint, .mint.opacity(0.5)], startPoint: .topLeading, endPoint: .bottomTrailing)
-            case "blue":
-                return LinearGradient(colors: [.blue, .blue.opacity(0.5)], startPoint: .topLeading, endPoint: .bottomTrailing)
-            case "green":
-                return LinearGradient(colors: [.green, .red], startPoint: .topLeading, endPoint: .bottomTrailing)
-            default:
-                return LinearGradient(colors: [.black, .black.opacity(0.5)], startPoint: .topLeading, endPoint: .bottomTrailing)
-            }
-        }
-    }
-
-    init(theme: Theme? = nil) {
-        if let theme = theme {
-            self.theme = theme
-            model = Self.makeMemoryGame(with: self.theme)
-        } else {
-            self.theme = Self.randomTheme()
-            model = Self.makeMemoryGame(with: self.theme)
-        }
+    init(theme: Theme) {
+        model = Self.makeMemoryGame(with: theme)
     }
 
     // MARK: - Intents
@@ -129,9 +74,8 @@ class EmojiMemoryGame: ObservableObject {
         model.shuffle()
     }
 
-    func newGame() {
-        self.theme = Self.randomTheme()
-        model = Self.makeMemoryGame(with: self.theme)
+    func newGame(theme: Theme) {
+        model = Self.makeMemoryGame(with: theme)
     }
 }
 
