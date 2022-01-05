@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct MemorizeApp: App {
+    @StateObject var themeViewModel = ThemeViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ThemeChooserView(themeViewModel: ThemeViewModel())
+            ThemeChooserView()
+                .environmentObject(themeViewModel)
         }
     }
 }

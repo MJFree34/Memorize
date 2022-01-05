@@ -139,6 +139,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     private var lastPairTappedTime: Date?
     
+    var isDealt = false
+    
     private var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get {
             cards.indices.filter { cards[$0].isFaceUp }.oneAndOnly

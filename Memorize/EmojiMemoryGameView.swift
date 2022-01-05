@@ -175,22 +175,15 @@ import SwiftUI
 struct EmojiMemoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame
     
-    var theme: Theme
-    
     @Namespace private var dealingNamespace
     
     @State private var dealt = Set<Int>()
-
-    init(theme: Theme) {
-        game = EmojiMemoryGame(theme: theme)
-        self.theme = theme
-    }
     
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
                 HStack(alignment: .center) {
-                    Text(theme.name)
+                    Text(game.theme.name)
                         .font(.largeTitle)
                         .fontWeight(.bold)
 
@@ -212,6 +205,11 @@ struct EmojiMemoryGameView: View {
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            if game.isDealt {
+                game.cards.forEach { deal($0) }
+            }
+        }
     }
     
     var gameBody: some View {
@@ -231,7 +229,7 @@ struct EmojiMemoryGameView: View {
                     }
             }
         }
-        .foregroundColor(theme.color)
+        .foregroundColor(game.theme.color)
     }
     
     var deckBody: some View {
@@ -243,8 +241,9 @@ struct EmojiMemoryGameView: View {
             }
         }
         .frame(width: CardConstants.undealtWidth, height: CardConstants.undealtHeight)
-        .foregroundStyle(theme.color)
+        .foregroundStyle(game.theme.color)
         .onTapGesture {
+            game.deal()
             for card in game.cards {
                 withAnimation(dealAnimation(for: card)) {
                     deal(card)
@@ -266,7 +265,7 @@ struct EmojiMemoryGameView: View {
         Button("Restart") {
             withAnimation {
                 dealt = []
-                game.newGame(theme: theme)
+                game.newGame()
             }
         }
         .buttonStyle(.bordered)
@@ -350,9 +349,10 @@ struct CardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let theme = ThemeViewModel().themes[0]
+        let game = EmojiMemoryGame(theme: theme)
 
-        EmojiMemoryGameView(theme: theme)
-        EmojiMemoryGameView(theme: theme)
+        EmojiMemoryGameView(game: game)
+        EmojiMemoryGameView(game: game)
             .preferredColorScheme(.dark)
     }
 }

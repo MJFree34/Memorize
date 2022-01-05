@@ -51,17 +51,18 @@ class EmojiMemoryGame: ObservableObject {
     }
 
     @Published private var model: MemoryGame<String>
+    
+    let theme: Theme
 
-    var cards: [MemoryGame<String>.Card] {
-        model.cards
-    }
+    var cards: [MemoryGame<String>.Card] { model.cards }
 
-    var score: Int {
-        model.score
-    }
+    var score: Int { model.score }
+    
+    var isDealt: Bool { model.isDealt }
 
     init(theme: Theme) {
-        model = Self.makeMemoryGame(with: theme)
+        self.theme = theme
+        model = Self.makeMemoryGame(with: self.theme)
     }
 
     // MARK: - Intents
@@ -74,8 +75,12 @@ class EmojiMemoryGame: ObservableObject {
         model.shuffle()
     }
 
-    func newGame(theme: Theme) {
+    func newGame() {
         model = Self.makeMemoryGame(with: theme)
+    }
+    
+    func deal() {
+        model.isDealt = true
     }
 }
 
