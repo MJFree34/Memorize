@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Theme: Identifiable {
+struct Theme: Identifiable, Codable {
     var id: UUID = UUID()
     var name: String
     var emojis: [String]
