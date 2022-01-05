@@ -10,6 +10,8 @@
 		9A08AF6B26EA4C8B00A54941 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A08AF6A26EA4C8B00A54941 /* Cardify.swift */; };
 		9A11B97B2783A21A00E7C0D5 /* RGBAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A11B97A2783A21A00E7C0D5 /* RGBAColor.swift */; };
 		9A11B97D2784E07100E7C0D5 /* ThemeChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A11B97C2784E07100E7C0D5 /* ThemeChooserView.swift */; };
+		9A11B97F2785F0F400E7C0D5 /* ThemeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A11B97E2785F0F400E7C0D5 /* ThemeEditorView.swift */; };
+		9A11B9812785FCAC00E7C0D5 /* Character+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A11B9802785FCAC00E7C0D5 /* Character+Extensions.swift */; };
 		9A343DF926C2A98400B6BEF6 /* MemorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A343DF826C2A98400B6BEF6 /* MemorizeApp.swift */; };
 		9A343DFB26C2A98400B6BEF6 /* EmojiMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A343DFA26C2A98400B6BEF6 /* EmojiMemoryGameView.swift */; };
 		9A343DFD26C2A98500B6BEF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A343DFC26C2A98500B6BEF6 /* Assets.xcassets */; };
@@ -26,6 +28,8 @@
 		9A08AF6A26EA4C8B00A54941 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		9A11B97A2783A21A00E7C0D5 /* RGBAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBAColor.swift; sourceTree = "<group>"; };
 		9A11B97C2784E07100E7C0D5 /* ThemeChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeChooserView.swift; sourceTree = "<group>"; };
+		9A11B97E2785F0F400E7C0D5 /* ThemeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorView.swift; sourceTree = "<group>"; };
+		9A11B9802785FCAC00E7C0D5 /* Character+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Extensions.swift"; sourceTree = "<group>"; };
 		9A343DF526C2A98400B6BEF6 /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A343DF826C2A98400B6BEF6 /* MemorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeApp.swift; sourceTree = "<group>"; };
 		9A343DFA26C2A98400B6BEF6 /* EmojiMemoryGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGameView.swift; sourceTree = "<group>"; };
@@ -72,6 +76,7 @@
 				9A343DF826C2A98400B6BEF6 /* MemorizeApp.swift */,
 				9A11B97C2784E07100E7C0D5 /* ThemeChooserView.swift */,
 				9A343DFA26C2A98400B6BEF6 /* EmojiMemoryGameView.swift */,
+				9A11B97E2785F0F400E7C0D5 /* ThemeEditorView.swift */,
 				9AC49D3726CC5F28009B0E05 /* AspectVGrid.swift */,
 				9AC49D3926CC6CC6009B0E05 /* Pie.swift */,
 				9A08AF6A26EA4C8B00A54941 /* Cardify.swift */,
@@ -80,6 +85,7 @@
 				9A5FB7182751258D0038F4ED /* ThemeViewModel.swift */,
 				9A5FB71A275125930038F4ED /* Theme.swift */,
 				9A11B97A2783A21A00E7C0D5 /* RGBAColor.swift */,
+				9A11B9802785FCAC00E7C0D5 /* Character+Extensions.swift */,
 				9A343DFC26C2A98500B6BEF6 /* Assets.xcassets */,
 				9A343DFE26C2A98500B6BEF6 /* Preview Content */,
 			);
@@ -165,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A5FB71B275125930038F4ED /* Theme.swift in Sources */,
+				9A11B97F2785F0F400E7C0D5 /* ThemeEditorView.swift in Sources */,
 				9AC49D3A26CC6CC6009B0E05 /* Pie.swift in Sources */,
 				9A08AF6B26EA4C8B00A54941 /* Cardify.swift in Sources */,
 				9AFF81E826C57C4500F6547F /* MemoryGame.swift in Sources */,
@@ -172,6 +179,7 @@
 				9A343DFB26C2A98400B6BEF6 /* EmojiMemoryGameView.swift in Sources */,
 				9A11B97B2783A21A00E7C0D5 /* RGBAColor.swift in Sources */,
 				9A343DF926C2A98400B6BEF6 /* MemorizeApp.swift in Sources */,
+				9A11B9812785FCAC00E7C0D5 /* Character+Extensions.swift in Sources */,
 				9AC49D3826CC5F28009B0E05 /* AspectVGrid.swift in Sources */,
 				9A5FB7192751258D0038F4ED /* ThemeViewModel.swift in Sources */,
 				9AFF81EA26C57EAC00F6547F /* EmojiMemoryGame.swift in Sources */,
